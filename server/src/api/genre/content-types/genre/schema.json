@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "keywords",
+  "collectionName": "genres",
   "info": {
-    "singularName": "keyword",
-    "pluralName": "keywords",
-    "displayName": "Keyword",
+    "singularName": "genre",
+    "pluralName": "genres",
+    "displayName": "Genre",
     "description": ""
   },
   "options": {
@@ -12,27 +12,21 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Word": {
+    "title": {
       "type": "string",
       "required": true,
       "unique": true
     },
-    "Description": {
+    "description": {
       "type": "text",
       "required": true,
       "unique": true
     },
-    "book_keywords": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::book-keyword.book-keyword",
-      "mappedBy": "keyword"
-    },
     "books": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToMany",
       "target": "api::book.book",
-      "inversedBy": "keywords"
+      "mappedBy": "genre"
     }
   }
 }

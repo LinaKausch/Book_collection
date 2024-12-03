@@ -382,14 +382,14 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   };
   attributes: {
     books: Schema.Attribute.Relation<'oneToMany', 'api::book.book'>;
-    Born: Schema.Attribute.Date & Schema.Attribute.Required;
+    born: Schema.Attribute.Date & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Description: Schema.Attribute.Text &
+    description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required &
       Schema.Attribute.Private;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -398,39 +398,10 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
       'api::author.author'
     > &
       Schema.Attribute.Private;
-    Name: Schema.Attribute.String &
+    name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    Ocupation: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiBookKeywordBookKeyword extends Struct.CollectionTypeSchema {
-  collectionName: 'book_keywords';
-  info: {
-    displayName: 'Book-keyword';
-    pluralName: 'book-keywords';
-    singularName: 'book-keyword';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    keyword: Schema.Attribute.Relation<'manyToOne', 'api::keyword.keyword'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::book-keyword.book-keyword'
-    > &
-      Schema.Attribute.Private;
+    ocupation: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -451,25 +422,21 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
   };
   attributes: {
     author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
-    book_keywords: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::book-keyword.book-keyword'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Description: Schema.Attribute.Text &
+    description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     genre: Schema.Attribute.Relation<'manyToOne', 'api::genre.genre'>;
-    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     keywords: Schema.Attribute.Relation<'manyToMany', 'api::keyword.keyword'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::book.book'> &
       Schema.Attribute.Private;
-    Publish_year: Schema.Attribute.Integer & Schema.Attribute.Required;
+    publish_year: Schema.Attribute.Integer & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Title: Schema.Attribute.String &
+    title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
@@ -494,14 +461,14 @@ export interface ApiGenreGenre extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Description: Schema.Attribute.Text &
+    description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::genre.genre'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    Title: Schema.Attribute.String &
+    title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
@@ -522,15 +489,11 @@ export interface ApiKeywordKeyword extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    book_keywords: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::book-keyword.book-keyword'
-    >;
     books: Schema.Attribute.Relation<'manyToMany', 'api::book.book'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Description: Schema.Attribute.Text &
+    description: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -543,7 +506,7 @@ export interface ApiKeywordKeyword extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Word: Schema.Attribute.String &
+    word: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
   };
@@ -1059,7 +1022,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::author.author': ApiAuthorAuthor;
-      'api::book-keyword.book-keyword': ApiBookKeywordBookKeyword;
       'api::book.book': ApiBookBook;
       'api::genre.genre': ApiGenreGenre;
       'api::keyword.keyword': ApiKeywordKeyword;

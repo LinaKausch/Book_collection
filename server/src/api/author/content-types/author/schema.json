@@ -12,12 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true,
       "unique": true
     },
-    "Image": {
+    "image": {
       "type": "media",
       "multiple": false,
       "required": true,
@@ -29,17 +29,17 @@
         "audios"
       ]
     },
-    "Born": {
+    "born": {
       "type": "date",
       "required": true,
       "unique": false
     },
-    "Description": {
+    "description": {
       "type": "text",
       "required": true,
       "unique": true
     },
-    "Ocupation": {
+    "ocupation": {
       "type": "string",
       "required": false,
       "unique": false
