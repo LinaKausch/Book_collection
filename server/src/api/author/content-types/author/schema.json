@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -21,7 +21,6 @@
       "type": "media",
       "multiple": false,
       "required": true,
-      "private": true,
       "allowedTypes": [
         "images",
         "files",
@@ -39,16 +38,16 @@
       "required": true,
       "unique": true
     },
-    "ocupation": {
-      "type": "string",
-      "required": false,
-      "unique": false
-    },
     "books": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::book.book",
       "mappedBy": "author"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
     }
   }
 }

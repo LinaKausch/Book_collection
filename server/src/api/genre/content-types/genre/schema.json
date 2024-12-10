@@ -27,6 +27,10 @@
       "relation": "oneToMany",
       "target": "api::book.book",
       "mappedBy": "genre"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
     }
   }
 }

@@ -1,0 +1,26 @@
+---
+
+// import fetchApi from "../lib/strapi";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BooksList from "../components/BooksList.astro";
+import FilterGenre from "../components/FilterGenre.astro";
+
+// const books = await fetchApi({
+//     endpoint: "books",
+//     wrappedByKey: "data",
+//     // query: { populate: ["image", "genre"] },
+// });
+
+// const genres = await fetchApi({
+//     endpoint: "genres",
+//     wrappedByKey: "data",
+// });
+---
+
+<BaseLayout>
+    <h1>Books</h1>
+    <main>
+        <!-- <FilterGenre /> -->
+        <BooksList />
+    </main>
+</BaseLayout>

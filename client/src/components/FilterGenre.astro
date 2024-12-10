@@ -1,0 +1,55 @@
+---
+const { genres } = Astro.props;
+console.log(genres);
+---
+
+<script>
+    const handleOptionChange = () => {
+        const selection = [
+            ...document.querySelectorAll(".filteroption:checked"),
+        ].map(($input) => $input.value);
+
+    
+            if (selection.length > 0) {
+                document
+                    .querySelectorAll("[data-genre]")
+                    .forEach(($li) => $li.classList.add("hidden"));
+
+                selection.forEach((genre) => {
+                    document
+                        .querySelectorAll(`[data-genre="${genre}"]`)
+                        .forEach(($li) => $li.classList.remove("hidden"));
+                });
+            } else {
+                document
+                    .querySelectorAll("[data-genre]")
+                    .forEach(($li) => $li.classList.remove("hidden"));
+            }
+    };
+
+    document.addEventListener("astro:page-load", () => {
+        const options = document.querySelectorAll(".filteroption");
+        options.forEach((option) =>
+            option.addEventListener("change", handleOptionChange),
+        );
+    });
+</script>
+<strong>Filter by Genre</strong>
+
+<ul>
+    {
+        genres.map((genre) => (
+            <li>
+                <label>
+                    <span>{genre.title}</span>
+                    <input
+                        class="filteroption"
+                        type="checkbox"
+                        value={genre.slug}
+                        name="filter"
+                    />
+                </label>
+            </li>
+        ))
+    }
+</ul>

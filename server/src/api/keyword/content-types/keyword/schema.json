@@ -27,6 +27,10 @@
       "relation": "manyToMany",
       "target": "api::book.book",
       "inversedBy": "keywords"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "word"
     }
   }
 }

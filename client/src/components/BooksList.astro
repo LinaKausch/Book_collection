@@ -1,0 +1,33 @@
+---
+import "../styles/global.css";
+import fetchApi from "../lib/strapi";
+import BookCard from "./BookCard.astro";
+import FilterGenre from "./FilterGenre.astro";
+
+const books = await fetchApi({
+    endpoint: "books",
+    wrappedByKey: "data",
+    query: { populate: ["image", "genre"] },
+});
+
+const genres = await fetchApi({
+    endpoint: "genres",
+    wrappedByKey: "data",
+});
+
+// console.log(books);
+---
+
+<FilterGenre genres={genres} />
+<ul>
+    {
+        books.map((book) => (
+            // <li data-category={book.ganre?.slug}>
+            <li>
+                <a href={`/books/${book.slug}`}>
+                    <BookCard book={book} />
+                </a>
+            </li>
+        ))
+    }
+</ul>

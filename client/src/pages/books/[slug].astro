@@ -1,0 +1,54 @@
+---
+import { Image, Picture } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import fetchApi from "../../lib/strapi";
+
+export async function getStaticPaths() {
+  const books = await fetchApi({
+    endpoint: "books",
+    wrappedByKey: "data",
+    query: { populate: ["image", "genre", "keywords", "author"] },
+  });
+
+  const paths = books.map((book) => ({
+    params: { slug: book.slug },
+    props: {
+      book,
+    },
+  }));
+
+  return paths;
+}
+
+const { book } = Astro.props;
+---
+
+<BaseLayout>
+  <h2>{book.title}</h2>
+  <p>
+    Author: <a href={`/authors/${book.author.slug}`}>{book.author.name}</a>
+    <p>Year of publish: {book.publish_year}</p>
+    <Image
+      src={`${import.meta.env.STRAPI_URL}${book.image.url}`}
+      alt="Book image"
+      width="300"
+      height="400"
+      widths={[250, 350, 500, 750]}
+      format="avif"
+      sizes="(min-width: 2960px) calc(12.5vw - 118px), (min-width: 2600px) calc(5vw + 121px), (min-width: 2240px) calc(5.29vw + 131px), (min-width: 1900px) calc(5vw + 157px), (min-width: 1540px) calc(4.71vw + 180px), (min-width: 1160px) calc(3.33vw + 217px), (min-width: 1120px) calc(325vw - 3455px), (min-width: 760px) calc(3.53vw + 229px), (min-width: 540px) calc(42vw - 43px), calc(8.18vw + 225px)"
+    />
+    <p>
+      Genre: <a href={`/genres/${book.genre.slug}`}>{book.genre.title}</a>
+    </p>
+    <p>
+      Keywords:
+      {
+        book.keywords.map((keyword) => (
+          <a href={`/keywords/${keyword.slug}`}>{keyword.word}</a>
+        ))
+      }
+    </p>
+
+    <p>About: {book.description}</p>
+  </p>
+</BaseLayout>

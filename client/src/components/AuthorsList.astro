@@ -1,0 +1,18 @@
+---
+
+import AuthorCard from "./AuthorCard.astro";
+const {authors} = Astro.props;
+
+---
+
+<ul>
+    {
+        authors.map((author) => (
+            <li>
+                <a href={`/authors/${author.slug}`}>
+                    <AuthorCard author={author} />
+                </a>
+            </li>
+        ))
+    }
+</ul>

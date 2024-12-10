@@ -1,0 +1,20 @@
+---
+import fetchApi from "../lib/strapi";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AuthorsList from "../components/AuthorsList.astro";
+
+const authors = await fetchApi({
+    endpoint: "authors",
+    wrappedByKey: "data",
+    query: { populate: "image" },
+});
+
+console.log(authors);
+---
+
+<BaseLayout>
+    <h1>Authors</h1>
+    <main>
+        <AuthorsList authors={authors} />
+    </main>
+</BaseLayout>
