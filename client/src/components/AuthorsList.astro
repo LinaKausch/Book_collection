@@ -1,8 +1,6 @@
 ---
-
 import AuthorCard from "./AuthorCard.astro";
-const {authors} = Astro.props;
-
+const { authors } = Astro.props;
 ---
 
 <ul>
@@ -16,3 +14,16 @@ const {authors} = Astro.props;
         ))
     }
 </ul>
+
+<style>
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    li {
+        max-width: 250px;
+        height:500px;
+        padding: 1rem;
+    }
+</style>

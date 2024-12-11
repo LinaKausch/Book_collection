@@ -1,13 +1,14 @@
 ---
-import "../styles/global.css";
+// import "../styles/global.css";
 import fetchApi from "../lib/strapi";
 import BookCard from "./BookCard.astro";
 import FilterGenre from "./FilterGenre.astro";
+// import FilterKeyword from "./FilterKeyword.astro";
 
 const books = await fetchApi({
     endpoint: "books",
     wrappedByKey: "data",
-    query: { populate: ["image", "genre"] },
+    query: { populate: ["image", "genre", "keywords"] },
 });
 
 const genres = await fetchApi({
@@ -15,15 +16,38 @@ const genres = await fetchApi({
     wrappedByKey: "data",
 });
 
-// console.log(books);
+const keywords = await fetchApi({
+    endpoint: "keywords",
+    wrappedByKey: "data",
+});
+
+// const booksWithKeywords = books.map((book) => ({
+//     ...book,
+//     keywordSlugs: book.keywords.map((keyword) => keyword.slug), // Add the slugs of the keywords
+// }));
+
+// console.log(booksWithKeywords);
 ---
 
 <FilterGenre genres={genres} />
+<!-- <FilterKeyword keywords={keywords} /> -->
+
+<!-- <ul>
+    {booksWithKeywords.map((book) => (
+        <li
+            data-genre={book.genre?.slug}
+            data-keywords={book.keywordSlugs.join(", ")}
+       >
+            <a href={`/books/${book.slug}`}>
+                <BookCard book={book} />
+            </a>
+        </li>
+    ))}
+</ul> -->
 <ul>
     {
         books.map((book) => (
-            // <li data-category={book.ganre?.slug}>
-            <li>
+            <li data-genre={book.genre?.slug}>
                 <a href={`/books/${book.slug}`}>
                     <BookCard book={book} />
                 </a>
@@ -31,3 +55,15 @@ const genres = await fetchApi({
         ))
     }
 </ul>
+<style>
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    li {
+        max-width: 300px;
+        height: 600px;
+        padding: 1rem;
+    }
+</style>

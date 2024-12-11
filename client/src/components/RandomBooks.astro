@@ -1,0 +1,40 @@
+---
+// RandomBooks.astro
+import fetchApi from "../lib/strapi";
+import BookCard from "./BookCard.astro";
+
+// Fetch all books
+const books = await fetchApi({
+    endpoint: "books",
+    wrappedByKey: "data",
+    query: { populate: "image" },
+});
+
+// Function to get a random selection of items from an array
+const getRandomSelection = (array, count) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, count);
+};
+
+// Get 4 random books
+const randomBooks = getRandomSelection(books, 4);
+---
+
+<div>
+    <h2>Random Books</h2>
+    <ul>
+        {
+            randomBooks.map((book) => (
+                <li>
+                    <a href={`/books/${book.slug}`}>
+                        <BookCard book={book} />
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</div>

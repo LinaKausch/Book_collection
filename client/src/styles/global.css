@@ -24,6 +24,9 @@ img {
     border: 0;
 }
 
-.selected {
-    background-color: black;
+ul {
+    list-style: none;
 }
+
+
+

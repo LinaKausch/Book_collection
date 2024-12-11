@@ -1,0 +1,86 @@
+---
+const { keywords } = Astro.props;
+---
+
+<script>
+    const handleOptionChange = () => {
+        const selection = [
+            ...document.querySelectorAll(".filteroption:checked"),
+        ].map(($input) => $input.value);
+
+        // If no selection, show all books
+        if (selection.length === 0) {
+            document.querySelectorAll("[data-keywords]").forEach(($li) => {
+                $li.classList.remove("hidden");
+            });
+        } else {
+            // Otherwise, hide all books and only show those matching the selected keywords
+            document.querySelectorAll("[data-keywords]").forEach(($li) => {
+                const bookKeywords = $li
+                    .getAttribute("data-keywords")
+                    .split(", ");
+                const matches = selection.some((keyword) =>
+                    bookKeywords.includes(keyword),
+                );
+                if (matches) {
+                    $li.classList.remove("hidden");
+                } else {
+                    $li.classList.add("hidden");
+                }
+            });
+        }
+    };
+
+    document
+        .querySelectorAll(".filteroption")
+        .forEach((option) =>
+            option.addEventListener("change", handleOptionChange),
+        );
+</script>
+<!-- <script>
+    const handleOptionChange = () => {
+        const selection = [
+            ...document.querySelectorAll(".filteroption:checked"),
+        ].map(($input) => $input.value);
+
+        if (selection.length > 0) {
+            document
+                .querySelectorAll("[data-keywords]")
+                .forEach(($li) => $li.classList.add("hidden"));
+
+            selection.forEach((keyword) => {
+                document
+                    .querySelectorAll(`[data-keywords*="${keyword}"]`)
+                    .forEach(($li) => $li.classList.remove("hidden"));
+            });
+        } else {
+            document
+                .querySelectorAll("[data-keywords]")
+                .forEach(($li) => $li.classList.remove("hidden"));
+        }
+    };
+
+    const options = document.querySelectorAll(".filteroption");
+    options.forEach((option) =>
+        option.addEventListener("change", handleOptionChange),
+    );
+</script> -->
+<strong>Filter by Keyword</strong>
+
+<ul>
+    {
+        keywords.map((keyword) => (
+            <li>
+                <label>
+                    <span>{keyword.word}</span>
+                    <input
+                        class="filteroption"
+                        type="checkbox"
+                        value={keyword.slug}
+                        name="filter"
+                    />
+                </label>
+            </li>
+        ))
+    }
+</ul>

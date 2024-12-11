@@ -2,6 +2,7 @@
 import { Image, Picture } from "astro:assets";
 import fetchApi from "../../lib/strapi";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RandomAuthors from "../../components/RandomAuthors.astro";
 
 export async function getStaticPaths() {
     // const books = await fetchApi({
@@ -67,4 +68,5 @@ console.log(author);
             ))
         }
     </ul>
+    <RandomAuthors></RandomAuthors>
 </BaseLayout>

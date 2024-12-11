@@ -17,12 +17,11 @@ export default async function fetchApi(
   }
 
   const url = new URL(
-    `${import.meta.env.STRAPI_URL}/api/${endpoint}${
-      query ? `?${qs.stringify(query, { encode: false })}` : ``
+    `${import.meta.env.STRAPI_URL}/api/${endpoint}${query ? `?${qs.stringify(query, { encode: false })}` : ``
     }`
   );
 
-  //console.log("Fetching...", url.toString());
+  console.log("Fetching...", url.toString());
 
   const res = await fetch(url.toString(), options);
   let data = await res.json();
