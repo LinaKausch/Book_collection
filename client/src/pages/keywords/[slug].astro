@@ -2,6 +2,7 @@
 import { Image, Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import fetchApi from "../../lib/strapi";
+import BookCard from "../../components/BookCard.astro";
 
 export async function getStaticPaths() {
     const keywords = await fetchApi({
@@ -24,26 +25,46 @@ const { keyword } = Astro.props;
 ---
 
 <BaseLayout>
-    <h2>{keyword.word}</h2>
-    <p>What is {keyword.word} in books?</p>
-    <p>{keyword.description}</p>
-    <ul>
-        {
-            keyword.books.map((book) => (
-                <li key={book.slug}>
-                    <a href={`/books/${book.slug}`}>
-                        <h4>{book.title}</h4>
-                        {book.image && (
-                            <img
-                                src={`${import.meta.env.STRAPI_URL}${book.image.url}`}
-                                alt={book.title}
-                                width="150"
-                                height="200"
-                            />
-                        )}
-                    </a>
-                </li>
-            ))
-        }
-    </ul>
+    <div class="keyword">
+        <h2>{keyword.word}</h2>
+        <div class="about__keyword">
+            <p class="keyword__title">What is {keyword.word} in books?</p>
+            <p>{keyword.description}</p>
+        </div>
+        <ul class="list">
+            {
+                keyword.books.map((book) => (
+                    <li key={book.slug}>
+                        <a href={`/books/${book.slug}`}>
+                            <BookCard book={book} />
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
 </BaseLayout>
+
+<style>
+    .keyword {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .list {
+        display: flex;
+    }
+
+    .about__keyword {
+        max-width: 40rem;
+    }
+
+    .keyword__title {
+        padding: 3rem 0;
+        padding-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+</style>

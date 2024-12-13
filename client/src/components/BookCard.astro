@@ -1,28 +1,48 @@
 ---
-
 import { Image, Picture } from "astro:assets";
 const { book, showGenre = true } = Astro.props;
 ---
 
-<article>
-    <Image
-        src={`${import.meta.env.STRAPI_URL}${book.image.url}`}
-        alt="Book image"
-        width="250"
-        height="300"
-        widths={[250, 350, 500, 750]}
-        format="avif"
-        sizes="(min-width: 2960px) calc(12.5vw - 118px), (min-width: 2600px) calc(5vw + 121px), (min-width: 2240px) calc(5.29vw + 131px), (min-width: 1900px) calc(5vw + 157px), (min-width: 1540px) calc(4.71vw + 180px), (min-width: 1160px) calc(3.33vw + 217px), (min-width: 1120px) calc(325vw - 3455px), (min-width: 760px) calc(3.53vw + 229px), (min-width: 540px) calc(42vw - 43px), calc(8.18vw + 225px)"
-    />
-    <h3>{book.title}</h3>
 
-    {
-        showGenre && book.genre && (
-            <p class="genre">
-                <a href={`/genres/${book.genre.slug}`}>
-                    More {book.genre.title}
-                </a>
-            </p>
-        )
+    <article class="card">
+        <Image
+            class="img"
+            src={`${import.meta.env.STRAPI_URL}${book.image.url}`}
+            alt="Book image"
+            width="250"
+            height="300"
+            widths={[250, 350, 500, 750]}
+            format="avif"
+            sizes="(min-width: 2960px) calc(12.5vw - 118px), (min-width: 2600px) calc(5vw + 121px), (min-width: 2240px) calc(5.29vw + 131px), (min-width: 1900px) calc(5vw + 157px), (min-width: 1540px) calc(4.71vw + 180px), (min-width: 1160px) calc(3.33vw + 217px), (min-width: 1120px) calc(325vw - 3455px), (min-width: 760px) calc(3.53vw + 229px), (min-width: 540px) calc(42vw - 43px), calc(8.18vw + 225px)"
+        />
+        <h3>{book.title}</h3>
+        <p>{book.publish_year}</p>
+    </article>
+
+
+<style>
+    article {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto min-content;
+        align-items: flex-start;
+        gap: 1rem;
+
+        background-color: #eaeaea;
+        padding: 2rem;
+        border-radius: 1rem;
     }
-</article>
+
+    .img {
+        aspect-ratio: 3/4;
+        object-fit: contain;
+        justify-self: center;
+        padding: var(--s1);
+    }
+
+    h3{
+        font-size: 1.5rem;
+    }
+
+</style>

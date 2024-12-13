@@ -13,6 +13,7 @@ img {
     height: auto;
 }
 
+
 .hidden {
     position: absolute;
     width: 1px;
@@ -24,9 +25,103 @@ img {
     border: 0;
 }
 
+body {
+    max-width: 90rem;
+    margin: auto;
+}
+
 ul {
     list-style: none;
 }
 
+a {
+    text-decoration: none;
+    font-family: "neue-kabel", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    color: #822f2f;
+}
 
+h1 {
+    text-align: center;
+    font-size: 5rem;
+    font-family: "alfarn",
+        sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    padding: 2rem 0;
+}
 
+h2 {
+    font-size: 3rem;
+    font-family: "alfarn-2",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+p {
+
+    font-family: "neue-kabel", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.list {
+    margin: 3rem 5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    justify-items: center;
+    gap: 1rem;
+}
+
+.own__books__list{
+    display:flex;
+    gap: 1rem;
+}
+
+.author__list {
+    margin: 3rem 8rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    justify-items: center;
+    gap: 1rem;
+}
+
+.random__list .li li {
+    padding: 1rem;
+}
+
+.list__link {
+    font-size: 3rem;
+    font-family: "alfarn-2",
+        sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    display: inline-block;
+    position: relative;
+    transform: translateX(2rem);
+    transition: transform 0.3s ease;
+    padding-top: 2rem;
+}
+
+.list__link::after {
+    content: 'More ⇨';
+    color: #000;
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.list__link:hover::after {
+    opacity: 1;
+    color: #822f2f;
+}
+
+.list__link:hover {
+    color: #822f2f;
+    transform: translateX(0);
+}

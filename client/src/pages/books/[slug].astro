@@ -2,6 +2,7 @@
 import { Image, Picture } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import fetchApi from "../../lib/strapi";
+import BookCard from "../../components/BookCard.astro";
 
 export async function getStaticPaths() {
   const books = await fetchApi({
@@ -45,53 +46,114 @@ const relatedBooks = related.filter((related) => related.slug !== book.slug);
 ---
 
 <BaseLayout>
-  <h2>{book.title}</h2>
-  <p>
-    Author: <a href={`/authors/${book.author.slug}`}>{book.author.name}</a>
-  </p>
-  <p>Year of publish: {book.publish_year}</p>
-  <Image
-    src={`${import.meta.env.STRAPI_URL}${book.image.url}`}
-    alt="Book image"
-    width="300"
-    height="400"
-    widths={[250, 350, 500, 750]}
-    format="avif"
-    sizes="(min-width: 2960px) calc(12.5vw - 118px), (min-width: 2600px) calc(5vw + 121px), (min-width: 2240px) calc(5.29vw + 131px), (min-width: 1900px) calc(5vw + 157px), (min-width: 1540px) calc(4.71vw + 180px), (min-width: 1160px) calc(3.33vw + 217px), (min-width: 1120px) calc(325vw - 3455px), (min-width: 760px) calc(3.53vw + 229px), (min-width: 540px) calc(42vw - 43px), calc(8.18vw + 225px)"
-  />
-  <p>
-    Genre: <a href={`/genres/${book.genre.slug}`}>{book.genre.title}</a>
-  </p>
-  <p>
-    Topic:
-    {
-      book.keywords.map((keyword) => (
-        <a href={`/keywords/${keyword.slug}`}>{keyword.word}</a>
-      ))
-    }
-  </p>
-
-  <p>About: {book.description}</p>
+  <div class="book">
+    <h2>{book.title}</h2>
+    <div class="about__book">
+      <Image
+        src={`${import.meta.env.STRAPI_URL}${book.image.url}`}
+        alt="Book image"
+        width="300"
+        height="400"
+        widths={[250, 350, 500, 750]}
+        format="avif"
+        sizes="(min-width: 2960px) calc(12.5vw - 118px), (min-width: 2600px) calc(5vw + 121px), (min-width: 2240px) calc(5.29vw + 131px), (min-width: 1900px) calc(5vw + 157px), (min-width: 1540px) calc(4.71vw + 180px), (min-width: 1160px) calc(3.33vw + 217px), (min-width: 1120px) calc(325vw - 3455px), (min-width: 760px) calc(3.53vw + 229px), (min-width: 540px) calc(42vw - 43px), calc(8.18vw + 225px)"
+      />
+      <div class="book__text">
+        <div>
+          <p class="title">Author:</p>
+          <p class="answ">
+            <a href={`/authors/${book.author.slug}`}>{book.author.name}</a>
+          </p>
+        </div>
+        <div>
+          <p class="title">Year of publish:</p>
+          <p>{book.publish_year}</p>
+        </div>
+        <div>
+          <p class="title">Genre:</p>
+          <p class="answ">
+            <a href={`/genres/${book.genre.slug}`}>{book.genre.title}</a>
+          </p>
+        </div>
+        <div>
+          <p class="title">Topic:</p>
+          <ul>
+            {
+              book.keywords.map((keyword) => (
+                <li class="answ">
+                  <a href={`/keywords/${keyword.slug}`}>{keyword.word}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <p class="title">About:</p>
+          <p>{book.description}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>Similar books:</h2>
+    <div class="related__books">
+      <ul class="list">
+        {
+          relatedBooks.map((relatedBook) => (
+            <li>
+              <a href={`/books/${relatedBook.slug}`}>
+                <BookCard book={relatedBook} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
 </BaseLayout>
 
-<h2>Similar books:</h2>
-<div class="related__books">
-  <ul>
-    {
-      relatedBooks.map((relatedBook) => (
-        <li>
-          <Image
-            src={`${import.meta.env.STRAPI_URL}${relatedBook.image.url}`}
-            alt="Book image"
-            width="300"
-            height="400"
-            widths={[250, 350, 500, 750]}
-            format="avif"
-            sizes="(min-width: 2960px) calc(12.5vw - 118px), (min-width: 2600px) calc(5vw + 121px), (min-width: 2240px) calc(5.29vw + 131px), (min-width: 1900px) calc(5vw + 157px), (min-width: 1540px) calc(4.71vw + 180px), (min-width: 1160px) calc(3.33vw + 217px), (min-width: 1120px) calc(325vw - 3455px), (min-width: 760px) calc(3.53vw + 229px), (min-width: 540px) calc(42vw - 43px), calc(8.18vw + 225px)"
-          />
-          <a href={`/books/${relatedBook.slug}`}>{relatedBook.title}</a>
-        </li>
-      ))
-    }
-  </ul>
-</div>
+<style>
+  img{
+    aspect-ratio: 3/4;
+    rotate: -3deg;
+  }
+  .book {
+    max-width: 70rem;
+    padding-bottom: 3rem;
+    padding-top: 1rem;
+    margin: 3rem auto;
+    background-color: #eaeaea;
+    border-radius: 5rem;
+  }
+  .about__book {
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+  }
+  p {
+    max-width: 30rem;
+  }
+  .book__text {
+    display: grid;
+padding-left: 2rem;
+  }
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+    padding-top: 1rem;
+  }
+  .answ {
+    font-size: 1.3rem;
+    font-weight: 400;
+    padding-bottom: 0.3rem;
+  }
+
+  .answ a {
+    font-weight: 400;
+  }
+
+  .answ a:hover {
+    font-weight: 600;
+  }
+</style>

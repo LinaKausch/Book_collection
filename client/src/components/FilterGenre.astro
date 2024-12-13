@@ -1,6 +1,5 @@
 ---
 const { genres } = Astro.props;
-
 ---
 
 <script>
@@ -32,22 +31,71 @@ const { genres } = Astro.props;
     );
 </script>
 
-<strong>Filter by Genre</strong>
+<div class="filter">
+    <p class="filter__title">Filter by Genre:</p>
 
-<ul>
-    {
-        genres.map((genre) => (
-            <li>
-                <label>
-                    <span>{genre.title}</span>
-                    <input
-                        class="filteroption"
-                        type="checkbox"
-                        value={genre.slug}
-                        name="filter"
-                    />
-                </label>
-            </li>
-        ))
+    <ul class="genre__options">
+        {
+            genres.map((genre) => (
+                <li>
+                    <label class="option">
+                        <span>{genre.title}</span>
+                        <input
+                            class="filteroption"
+                            type="checkbox"
+                            value={genre.slug}
+                            name="filter"
+                        />
+                    </label>
+                </li>
+            ))
+        }
+    </ul>
+</div>
+<style>
+    .filter {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        flex-wrap: wrap;
+        padding-bottom: 2rem;
     }
-</ul>
+    .genre__options {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0;
+    }
+
+    li {
+        padding: 1.5rem 0.5rem;
+    }
+    .filter__title {
+        font-size: 1.3rem;
+        color: #822f2f;
+        font-weight: bold;
+        margin-bottom: 0.3rem;
+        padding: 0.5rem;
+    }
+    input {
+        display: none;
+    }
+
+    label {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        color: #822f2f;
+        background-color: rgb(240, 203, 203);
+        font-weight: 600;
+    }
+
+    label:hover {
+        color: #212121;
+        cursor: pointer;
+    }
+
+    label:has(input:checked) {
+        background-color: #de6d6d;
+        color: #212121;
+    }
+</style>

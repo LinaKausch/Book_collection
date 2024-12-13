@@ -1,32 +1,24 @@
 ---
-// RandomAuthors.astro
 import fetchApi from "../lib/strapi";
 import AuthorCard from "./AuthorCard.astro";
 
-// Fetch all authors
 const authors = await fetchApi({
     endpoint: "authors",
     wrappedByKey: "data",
     query: { populate: "image" },
 });
 
-// Function to get a random selection of items from an array
-const getRandomSelection = (array, count) => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled.slice(0, count);
+const getRandomAuthors = (array, n) => {
+    const shuffle = array.sort(() => 0.5 - Math.random());
+    return shuffle.slice(0, n);
 };
 
-// Get 4 random authors
-const randomAuthors = getRandomSelection(authors, 4);
+const randomAuthors = getRandomAuthors(authors, 4);
 ---
 
-<div>
-    <h2>Random Authors</h2>
-    <ul>
+<div class="random__list">
+    <h2><a class="list__link" href="/authors">Authors</a></h2>
+    <ul class="author__list">
         {
             randomAuthors.map((author) => (
                 <li>

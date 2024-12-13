@@ -5,6 +5,7 @@ const { author } = Astro.props;
 
 <article>
     <Image
+        class="img"
         src={`${import.meta.env.STRAPI_URL}${author.image.url}`}
         alt="Book image"
         width="300"
@@ -18,5 +19,28 @@ const { author } = Astro.props;
     <p>
         {author.born}
     </p>
-
 </article>
+
+<style>
+    article {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto min-content;
+        align-items: flex-start;
+        gap: 1rem;
+
+        background-color: #eaeaea;
+        padding: 2rem;
+        border-radius: 1rem;
+    }
+
+    .img {
+        aspect-ratio: 1/1;
+        object-fit: contain;
+        justify-self: center;
+    }
+    h3 {
+        font-size: 1.5rem;
+    }
+</style>
