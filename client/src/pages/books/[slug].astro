@@ -25,9 +25,7 @@ const { book } = Astro.props;
 
 const keywords = book.keywords.map((word) => word.id);
 
-// console.log(keywords);
 
-//Find this out and get the books from these keywords and put them in the list
 const related = await fetchApi({
   endpoint: "books",
   wrappedByKey: "data",
@@ -42,7 +40,6 @@ const related = await fetchApi({
 });
 
 const relatedBooks = related.filter((related) => related.slug !== book.slug);
-// console.log(relatedBooks);
 ---
 
 <BaseLayout>
